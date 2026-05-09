@@ -1,1015 +1,649 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punnett Square Calculator - Genetics Inheritance Predictor</title>
-    <style>
-      * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary-color: #2e7d32;
-    --secondary-color: #1565c0;
-    --accent-color: #d32f2f;
-    --light-bg: #f5f5f5;
-    --dark-text: #212121;
-    --border-color: #e0e0e0;
-    --success-color: #4caf50;
-    --warning-color: #ff9800;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 8px 12px rgba(0, 0, 0, 0.15);
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: var(--dark-text);
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    margin: 20px;
-}
-
-/* Header Styles */
-.header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.header-content h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.subtitle {
-    font-size: 1.1em;
-    opacity: 0.95;
-    font-weight: 300;
-}
-
-/* Main Content */
-.main-content {
-    padding: 40px 20px;
-}
-
-.calculator-section {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.calculator-section h2 {
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    font-size: 1.8em;
-}
-
-.info-text {
-    color: #666;
-    margin-bottom: 30px;
-    font-size: 0.95em;
-}
-
-/* Parent Display Section */
-.parent-display-section {
-    background: var(--light-bg);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    border: 1px solid var(--border-color);
-}
-
-.parent-display-section h3 {
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-size: 1.2em;
-}
-
-.parent-display {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.parent-card {
-    background: white;
-    padding: 15px;
-    border-radius: 6px;
-    border-left: 4px solid var(--primary-color);
-}
-
-.parent-card h4 {
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.trait-display {
-    margin-bottom: 8px;
-    font-size: 0.95em;
-}
-
-.trait-display strong {
-    color: var(--dark-text);
-    display: inline-block;
-    min-width: 60px;
-}
-
-/* Input Section */
-.input-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin: 30px 0;
-    background: var(--light-bg);
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.parent-input {
-    display: flex;
-    flex-direction: column;
-}
-
-.parent-input label {
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--dark-text);
-}
-
-.trait-input-group {
-    margin-bottom: 15px;
-}
-
-.trait-input-group label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
-    color: var(--dark-text);
-    font-size: 0.95em;
-}
-
-.trait-input-controls {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-.trait-input-controls input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 0.9em;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-.trait-input-controls input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1);
-}
-
-.allele-buttons {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.allele-btn {
-    padding: 6px 12px;
-    border: 2px solid var(--border-color);
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.85em;
-    transition: all 0.2s ease;
-}
-
-.allele-btn:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.allele-btn.selected {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-/* Edit Alleles Section */
-.edit-alleles-section {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    border: 2px solid var(--secondary-color);
-    margin-bottom: 30px;
-}
-
-.edit-alleles-section h3 {
-    color: var(--secondary-color);
-    margin-bottom: 20px;
-    font-size: 1.2em;
-}
-
-.edit-parent {
-    margin-bottom: 20px;
-}
-
-.edit-parent h4 {
-    color: var(--dark-text);
-    margin-bottom: 12px;
-    font-weight: 700;
-}
-
-.edit-trait-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 12px;
-}
-
-.edit-trait-input {
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    text-align: center;
-    font-weight: 600;
-    background: var(--light-bg);
-}
-
-.edit-trait-input:disabled {
-    background: #e8e8e8;
-    color: #999;
-}
-
-/* Dominant Alleles Section */
-.dominant-alleles-section {
-    background: rgba(255, 152, 0, 0.05);
-    padding: 25px;
-    border-radius: 8px;
-    border-left: 5px solid var(--warning-color);
-    margin-bottom: 30px;
-}
-
-.dominant-alleles-section h3 {
-    color: var(--warning-color);
-    margin-bottom: 20px;
-    font-size: 1.2em;
-}
-
-.dominant-trait {
-    margin-bottom: 15px;
-}
-
-.dominant-trait label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--dark-text);
-}
-
-.dominant-options {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.radio-option {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.radio-option input[type="radio"] {
-    cursor: pointer;
-    width: 18px;
-    height: 18px;
-}
-
-.radio-option label {
-    margin: 0;
-    font-weight: 400;
-    cursor: pointer;
-}
-
-/* Show Options Section */
-.show-options-section {
-    background: var(--light-bg);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    border: 1px solid var(--border-color);
-}
-
-.show-options-section h4 {
-    color: var(--primary-color);
-    margin-bottom: 12px;
-    font-weight: 700;
-}
-
-/* Button */
-.calculate-btn {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    padding: 14px 40px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.05em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow);
-    width: 100%;
-    max-width: 300px;
-    display: block;
-    margin: 0 auto 30px;
-}
-
-.calculate-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.calculate-btn:active {
-    transform: translateY(0);
-}
-
-/* Results Section */
-.results-section {
-    margin-top: 30px;
-    animation: slideDown 0.4s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        max-height: 0;
-    }
-    to {
-        opacity: 1;
-        max-height: 2000px;
-    }
-}
-
-/* Punnett Square */
-.punnett-square {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    border: 2px solid var(--primary-color);
-    margin-bottom: 30px;
-    overflow-x: auto;
-}
-
-.punnett-square h3 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    font-size: 1.3em;
-}
-
-.square-grid {
-    display: inline-grid;
-    grid-template-columns: repeat(5, minmax(100px, 1fr));
-    gap: 2px;
-    background: var(--primary-color);
-    padding: 2px;
-    border-radius: 4px;
-}
-
-.square-cell {
-    background: white;
-    padding: 12px;
-    text-align: center;
-    font-weight: 600;
-    min-height: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2px;
-    font-size: 0.9em;
-}
-
-.square-cell.header {
-    background: var(--primary-color);
-    color: white;
-    font-weight: 700;
-    font-size: 0.85em;
-}
-
-.square-cell.result {
-    background: rgba(46, 125, 50, 0.05);
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-}
-
-.cell-genotype {
-    font-size: 0.75em;
-    color: #999;
-    margin-top: 4px;
-}
-
-.cell-phenotype {
-    font-size: 0.85em;
-    color: var(--secondary-color);
-    margin-top: 4px;
-}
-
-/* Probability Results */
-.probability-results {
-    background: var(--light-bg);
-    padding: 25px;
-    border-radius: 8px;
-    border-left: 5px solid var(--success-color);
-}
-
-.probability-results h3 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    font-size: 1.3em;
-}
-
-.probabilities {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.probability-item {
-    background: white;
-    padding: 20px;
-    border-radius: 6px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-top: 4px solid var(--primary-color);
-    transition: all 0.3s ease;
-}
-
-.probability-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.probability-item .genotype {
-    font-weight: 700;
-    color: var(--primary-color);
-    font-size: 1em;
-    margin-bottom: 8px;
-}
-
-.probability-item .percentage {
-    font-size: 2em;
-    font-weight: 700;
-    color: var(--secondary-color);
-}
-
-.probability-item .phenotype {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 8px;
-    font-style: italic;
-}
-
-/* Footer */
-.footer {
-    background: var(--light-bg);
-    padding: 20px;
-    text-align: center;
-    color: #666;
-    font-size: 0.9em;
-    border-top: 1px solid var(--border-color);
-}
-
-.footer p {
-    margin: 5px 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        margin: 10px;
-        border-radius: 0;
-    }
-
-    .header-content h1 {
-        font-size: 1.8em;
-    }
-
-    .subtitle {
-        font-size: 0.95em;
-    }
-
-    .input-section {
-        grid-template-columns: 1fr;
-        padding: 15px;
-    }
-
-    .parent-display {
-        grid-template-columns: 1fr;
-    }
-
-    .main-content {
-        padding: 20px 15px;
-    }
-
-    .edit-trait-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .square-grid {
-        grid-template-columns: repeat(4, minmax(80px, 1fr));
-    }
-
-    .probabilities {
-        grid-template-columns: 1fr;
-    }
-
-    .square-cell {
-        padding: 10px;
-        min-height: 80px;
-        font-size: 0.8em;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-content h1 {
-        font-size: 1.5em;
-    }
-
-    .subtitle {
-        font-size: 0.85em;
-    }
-
-    .calculate-btn {
-        padding: 12px 20px;
-        font-size: 0.95em;
-    }
-
-    .square-grid {
-        grid-template-columns: repeat(3, minmax(70px, 1fr));
-    }
-
-    .square-cell {
-        padding: 8px;
-        min-height: 70px;
-        font-size: 0.7em;
-    }
-
-    .edit-trait-row {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .dominant-options {
-        flex-direction: column;
-    }
-}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punnett Square Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink:#1a1a2e;
+  --ink2:#4a4a6a;
+  --ink3:#8888aa;
+  --paper:#faf9f6;
+  --surface:#f0eeea;
+  --surface2:#e8e5df;
+  --accent:#2d6a4f;
+  --accent2:#40916c;
+  --accent-light:#d8f3dc;
+  --gold:#b5850a;
+  --gold-light:#fef9ec;
+  --border:#d8d5cd;
+  --red:#9b2226;
+  --red-light:#f8eded;
+  --radius:6px;
+  --mono:'DM Mono',monospace;
+  --serif:'Fraunces',Georgia,serif;
+}
+
+body{
+  font-family:var(--mono);
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.6;
+}
+
+.page{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+
+/* Header */
+.header{text-align:center;padding:60px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.dna-icon{font-size:32px;margin-bottom:16px}
+.header h1{font-family:var(--serif);font-size:2.4rem;font-weight:300;color:var(--ink);letter-spacing:-0.5px;margin-bottom:8px}
+.header p{color:var(--ink3);font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase}
+
+/* Section headings */
+.section-label{
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  color:var(--ink3);
+  font-weight:500;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Parent input cards */
+.parents-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+.parent-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.parent-card-title{
+  font-family:var(--serif);
+  font-size:1rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.parent-badge{
+  display:inline-block;
+  width:22px;height:22px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  font-family:var(--mono);
+  font-size:0.7rem;
+  font-weight:500;
+  text-align:center;
+  line-height:22px;
+}
+.parent-badge.b{background:var(--red)}
+
+.trait-row{margin-bottom:14px}
+.trait-row label{
+  display:block;
+  font-size:0.72rem;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--ink3);
+  margin-bottom:6px;
+}
+.allele-inputs{display:flex;align-items:center;gap:6px}
+.allele-inputs input{
+  width:52px;height:40px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:#fff;
+  font-family:var(--mono);
+  font-size:1.1rem;
+  font-weight:500;
+  text-align:center;
+  color:var(--ink);
+  transition:border-color 0.15s;
+}
+.allele-inputs input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,106,79,0.12)}
+.allele-sep{color:var(--ink3);font-size:0.9rem}
+.gamete-preview{
+  font-size:0.72rem;
+  color:var(--ink3);
+  margin-top:10px;
+  padding:8px;
+  background:var(--surface2);
+  border-radius:4px;
+  line-height:1.8;
+}
+.gamete-preview strong{color:var(--ink2);font-weight:500}
+
+/* Dominance & display options */
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+.option-card{
+  background:var(--gold-light);
+  border:1px solid #e8d8a0;
+  border-radius:var(--radius);
+  padding:18px;
+}
+.option-card.display-card{
+  background:var(--accent-light);
+  border-color:#aed9bc;
+}
+.option-card h3{
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--gold);
+  margin-bottom:12px;
+  font-weight:500;
+}
+.option-card.display-card h3{color:var(--accent)}
+
+.trait-dom{margin-bottom:12px}
+.trait-dom label{
+  font-size:0.75rem;
+  color:var(--ink2);
+  display:block;
+  margin-bottom:6px;
+  font-weight:500;
+}
+.radio-group{display:flex;gap:6px;flex-wrap:wrap}
+.radio-pill{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:4px 10px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:#fff;
+  cursor:pointer;
+  font-size:0.78rem;
+  font-family:var(--mono);
+  transition:all 0.15s;
+  user-select:none;
+}
+.radio-pill input{display:none}
+.radio-pill:has(input:checked){
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#fff;
+}
+.option-card.display-card .radio-pill:has(input:checked){
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+.radio-pill:hover{border-color:var(--ink2)}
+
+/* Calculate button */
+.btn-calculate{
+  display:block;
+  width:100%;
+  padding:14px;
+  background:var(--ink);
+  color:#fff;
+  border:none;
+  border-radius:var(--radius);
+  font-family:var(--mono);
+  font-size:0.9rem;
+  letter-spacing:0.05em;
+  cursor:pointer;
+  transition:background 0.15s,transform 0.1s;
+  margin-bottom:40px;
+}
+.btn-calculate:hover{background:#2d2d4e}
+.btn-calculate:active{transform:scale(0.99)}
+
+/* Punnett Square Table */
+.square-wrapper{
+  overflow-x:auto;
+  margin-bottom:32px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+}
+.square-wrapper h3{
+  font-family:var(--serif);
+  font-size:1.1rem;
+  font-weight:400;
+  color:var(--ink);
+  margin-bottom:20px;
+}
+
+.punnett-table{
+  border-collapse:collapse;
+  font-family:var(--mono);
+  font-size:0.82rem;
+  min-width:420px;
+}
+.punnett-table td,.punnett-table th{
+  border:1px solid var(--border);
+  padding:0;
+  width:90px;
+  height:80px;
+  text-align:center;
+  vertical-align:middle;
+}
+.punnett-table .corner{background:var(--paper);border-color:transparent}
+.punnett-table .col-header,.punnett-table .row-header{
+  background:var(--ink);
+  color:#fff;
+  font-size:0.85rem;
+  font-weight:500;
+  letter-spacing:0.05em;
+}
+.punnett-table .row-header{background:var(--ink)}
+.cell-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  padding:8px;
+  gap:3px;
+}
+.cell-genotype{
+  font-size:0.82rem;
+  font-weight:500;
+  color:var(--accent);
+  letter-spacing:0.03em;
+}
+.cell-sub{
+  font-size:0.68rem;
+  color:var(--ink3);
+}
+.punnett-table .result-cell{background:var(--surface)}
+.punnett-table .result-cell:nth-child(even){background:#fff}
+
+/* Probability cards */
+.prob-section{margin-bottom:40px}
+.prob-section h3{
+  font-family:var(--serif);
+  font-size:1.1rem;
+  font-weight:400;
+  color:var(--ink);
+  margin-bottom:16px;
+}
+.prob-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+.prob-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  text-align:center;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.prob-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.prob-genotype{
+  font-family:var(--mono);
+  font-size:0.9rem;
+  font-weight:500;
+  color:var(--accent);
+  margin-bottom:6px;
+}
+.prob-pct{
+  font-family:var(--serif);
+  font-size:2rem;
+  font-weight:300;
+  color:var(--ink);
+  line-height:1;
+}
+.prob-ratio{font-size:0.72rem;color:var(--ink3);margin-top:4px}
+.prob-pheno{font-size:0.7rem;color:var(--ink2);margin-top:6px;font-style:italic}
+
+/* Summary row */
+.summary-bar{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 20px;
+  font-size:0.8rem;
+  color:var(--ink2);
+  margin-top:16px;
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.summary-bar span strong{color:var(--ink);font-weight:500}
+
+.results-section{animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.error-msg{
+  background:var(--red-light);
+  border:1px solid #e8a0a0;
+  border-radius:var(--radius);
+  padding:12px 16px;
+  font-size:0.82rem;
+  color:var(--red);
+  margin-bottom:20px;
+}
+
+@media(max-width:600px){
+  .parents-grid,.options-grid{grid-template-columns:1fr}
+  .header h1{font-size:1.8rem}
+  .page{padding:24px 16px 60px}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1>🧬 Punnett Square Calculator</h1>
-                <p class="subtitle">Custom 2-Trait Genetic Inheritance Predictor</p>
-            </div>
-        </header>
+<div class="page">
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="calculator-section">
-                <h2>Two-Trait Punnett Square Calculator</h2>
-                <p class="info-text">Create custom traits and predict offspring inheritance patterns with two independent traits.</p>
-                
-                <!-- Parent Display Section -->
-                <div class="parent-display-section">
-                    <h3>Pwede ma adaan like</h3>
-                    <div class="parent-display">
-                        <div class="parent-card">
-                            <h4>Parent A</h4>
-                            <div class="trait-display">
-                                <strong>TRAIT 1:</strong> <span id="display-p1-trait1"></span>
-                            </div>
-                            <div class="trait-display">
-                                <strong>TRAIT 2:</strong> <span id="display-p1-trait2"></span>
-                            </div>
-                        </div>
-                        <div class="parent-card">
-                            <h4>Parent B</h4>
-                            <div class="trait-display">
-                                <strong>TRAIT 1:</strong> <span id="display-p2-trait1"></span>
-                            </div>
-                            <div class="trait-display">
-                                <strong>TRAIT 2:</strong> <span id="display-p2-trait2"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <header class="header">
+    <div class="dna-icon">🧬</div>
+    <h1>Punnett Square Calculator</h1>
+    <p>Dihybrid cross — two independent traits</p>
+  </header>
 
-                <!-- Input Section -->
-                <div class="input-section">
-                    <div class="parent-input">
-                        <label>Parent 1 Alleles:</label>
-                        
-                        <div class="trait-input-group">
-                            <label>Trait 1</label>
-                            <div class="trait-input-controls">
-                                <input type="text" id="p1-trait1-allele1" maxlength="1" placeholder="A" value="A">
-                                <input type="text" id="p1-trait1-allele2" maxlength="1" placeholder="a" value="a">
-                            </div>
-                        </div>
+  <div id="error-container"></div>
 
-                        <div class="trait-input-group">
-                            <label>Trait 2</label>
-                            <div class="trait-input-controls">
-                                <input type="text" id="p1-trait2-allele1" maxlength="1" placeholder="B" value="B">
-                                <input type="text" id="p1-trait2-allele2" maxlength="1" placeholder="b" value="b">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="parent-input">
-                        <label>Parent 2 Alleles:</label>
-                        
-                        <div class="trait-input-group">
-                            <label>Trait 1</label>
-                            <div class="trait-input-controls">
-                                <input type="text" id="p2-trait1-allele1" maxlength="1" placeholder="A" value="A">
-                                <input type="text" id="p2-trait1-allele2" maxlength="1" placeholder="b" value="b">
-                            </div>
-                        </div>
-
-                        <div class="trait-input-group">
-                            <label>Trait 2</label>
-                            <div class="trait-input-controls">
-                                <input type="text" id="p2-trait2-allele1" maxlength="1" placeholder="B" value="B">
-                                <input type="text" id="p2-trait2-allele2" maxlength="1" placeholder="b" value="b">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Edit Alleles Section -->
-                <div class="edit-alleles-section">
-                    <h3>Edit Alleles:</h3>
-                    
-                    <div class="edit-parent">
-                        <h4>Parent 1:</h4>
-                        <div class="edit-trait-row">
-                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 1</div>
-                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 2</div>
-                            <input type="text" class="edit-trait-input" id="edit-p1-t1-a1" maxlength="1" value="A">
-                            <input type="text" class="edit-trait-input" id="edit-p1-t2-a1" maxlength="1" value="B">
-                        </div>
-                        <div class="edit-trait-row">
-                            <div style="text-align: center; font-weight: 600; color: #999;">A</div>
-                            <div style="text-align: center; font-weight: 600; color: #999;">B</div>
-                            <input type="text" class="edit-trait-input" id="edit-p1-t1-a2" maxlength="1" value="a">
-                            <input type="text" class="edit-trait-input" id="edit-p1-t2-a2" maxlength="1" value="b">
-                        </div>
-                    </div>
-
-                    <div class="edit-parent">
-                        <h4>Parent 2:</h4>
-                        <div class="edit-trait-row">
-                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 1</div>
-                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 2</div>
-                            <input type="text" class="edit-trait-input" id="edit-p2-t1-a1" maxlength="1" value="A">
-                            <input type="text" class="edit-trait-input" id="edit-p2-t2-a1" maxlength="1" value="B">
-                        </div>
-                        <div class="edit-trait-row">
-                            <div style="text-align: center; font-weight: 600; color: #999;">b</div>
-                            <div style="text-align: center; font-weight: 600; color: #999;">b</div>
-                            <input type="text" class="edit-trait-input" id="edit-p2-t1-a2" maxlength="1" value="b">
-                            <input type="text" class="edit-trait-input" id="edit-p2-t2-a2" maxlength="1" value="b">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dominant Alleles Section -->
-                <div class="dominant-alleles-section">
-                    <h3>Dominant Alleles:</h3>
-                    
-                    <div class="dominant-trait">
-                        <label>Trait 1:</label>
-                        <div class="dominant-options">
-                            <div class="radio-option">
-                                <input type="radio" id="trait1-none" name="trait1-dominant" value="none" checked>
-                                <label for="trait1-none">⭕None</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="trait1-A" name="trait1-dominant" value="A">
-                                <label for="trait1-A">Ⓐ A</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="trait1-a" name="trait1-dominant" value="a">
-                                <label for="trait1-a">Ⓐ a</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dominant-trait">
-                        <label>Trait 2:</label>
-                        <div class="dominant-options">
-                            <div class="radio-option">
-                                <input type="radio" id="trait2-none" name="trait2-dominant" value="none" checked>
-                                <label for="trait2-none">⭕None</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="trait2-B" name="trait2-dominant" value="B">
-                                <label for="trait2-B">Ⓑ B</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="trait2-b" name="trait2-dominant" value="b">
-                                <label for="trait2-b">Ⓑ b</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Show Options Section -->
-                <div class="show-options-section">
-                    <h4>Show:</h4>
-                    <div class="radio-option">
-                        <input type="radio" id="show-genotype" name="show-option" value="genotype" checked>
-                        <label for="show-genotype">⭕Genotype</label>
-                    </div>
-                    <div class="radio-option" style="margin-left: 20px;">
-                        <input type="radio" id="show-phenotype" name="show-option" value="phenotype">
-                        <label for="show-phenotype">⭕ Phenotype</label>
-                    </div>
-                </div>
-
-                <button class="calculate-btn" onclick="calculateTwoTraitSquare()">Calculate Results</button>
-
-                <!-- Results Section -->
-                <div id="results-container" class="results-section" style="display: none;">
-                    <div class="punnett-square">
-                        <h3>Para 4 ka column ang kwan table</h3>
-                        <div id="punnett-container" style="overflow-x: auto;"></div>
-                    </div>
-
-                    <div class="probability-results">
-                        <h3>Offspring Probability Results</h3>
-                        <div id="probabilities-container" class="probabilities"></div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2026 Punnett Square Calculator. Educational Tool for Genetics Prediction.</p>
-            <p>Built with HTML, CSS, and JavaScript | Genetics Education Resource</p>
-        </footer>
+  <!-- Parent Inputs -->
+  <div class="section-label">Parent genotypes</div>
+  <div class="parents-grid">
+    <div class="parent-card">
+      <div class="parent-card-title">
+        <span class="parent-badge">1</span> Parent 1
+      </div>
+      <div class="trait-row">
+        <label>Trait 1 alleles</label>
+        <div class="allele-inputs">
+          <input type="text" id="p1t1a1" maxlength="1" value="A" oninput="syncPreview()">
+          <span class="allele-sep">/</span>
+          <input type="text" id="p1t1a2" maxlength="1" value="a" oninput="syncPreview()">
+        </div>
+      </div>
+      <div class="trait-row">
+        <label>Trait 2 alleles</label>
+        <div class="allele-inputs">
+          <input type="text" id="p1t2a1" maxlength="1" value="B" oninput="syncPreview()">
+          <span class="allele-sep">/</span>
+          <input type="text" id="p1t2a2" maxlength="1" value="b" oninput="syncPreview()">
+        </div>
+      </div>
+      <div class="gamete-preview" id="p1-gametes">
+        <strong>Gametes:</strong> —
+      </div>
     </div>
 
-<!-- JAVASCRIPT SECTION -->
+    <div class="parent-card">
+      <div class="parent-card-title">
+        <span class="parent-badge b">2</span> Parent 2
+      </div>
+      <div class="trait-row">
+        <label>Trait 1 alleles</label>
+        <div class="allele-inputs">
+          <input type="text" id="p2t1a1" maxlength="1" value="A" oninput="syncPreview()">
+          <span class="allele-sep">/</span>
+          <input type="text" id="p2t1a2" maxlength="1" value="a" oninput="syncPreview()">
+        </div>
+      </div>
+      <div class="trait-row">
+        <label>Trait 2 alleles</label>
+        <div class="allele-inputs">
+          <input type="text" id="p2t2a1" maxlength="1" value="B" oninput="syncPreview()">
+          <span class="allele-sep">/</span>
+          <input type="text" id="p2t2a2" maxlength="1" value="b" oninput="syncPreview()">
+        </div>
+      </div>
+      <div class="gamete-preview" id="p2-gametes">
+        <strong>Gametes:</strong> —
+      </div>
+    </div>
+  </div>
+
+  <!-- Dominance & Display Options -->
+  <div class="options-grid">
+    <div class="option-card" id="dom-card">
+      <h3>Dominance settings</h3>
+      <div class="trait-dom">
+        <label id="dom-trait1-label">Trait 1 — dominant allele:</label>
+        <div class="radio-group" id="dom-trait1-group"></div>
+      </div>
+      <div class="trait-dom">
+        <label id="dom-trait2-label">Trait 2 — dominant allele:</label>
+        <div class="radio-group" id="dom-trait2-group"></div>
+      </div>
+    </div>
+
+    <div class="option-card display-card">
+      <h3>Display mode</h3>
+      <div class="radio-group">
+        <label class="radio-pill">
+          <input type="radio" name="display" value="genotype" checked> Genotype
+        </label>
+        <label class="radio-pill">
+          <input type="radio" name="display" value="phenotype"> Phenotype
+        </label>
+        <label class="radio-pill">
+          <input type="radio" name="display" value="both"> Both
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-calculate" onclick="calculate()">Calculate offspring →</button>
+
+  <!-- Results -->
+  <div id="results" style="display:none" class="results-section">
+    <div class="section-label">Punnett square (4 × 4)</div>
+    <div class="square-wrapper">
+      <div id="table-container"></div>
+    </div>
+
+    <div class="section-label">Offspring probabilities</div>
+    <div class="prob-section">
+      <div class="prob-grid" id="prob-grid"></div>
+      <div class="summary-bar" id="summary-bar"></div>
+    </div>
+  </div>
+
+</div>
+
 <script>
-// Update display when inputs change
-document.querySelectorAll('input[type="text"]').forEach(input => {
-    input.addEventListener('change', updateParentDisplay);
-});
+// ─── Helpers ───────────────────────────────────────────────────────────────
+function v(id){return document.getElementById(id).value.trim()}
 
-function updateParentDisplay() {
-    // Parent 1
-    const p1t1a1 = document.getElementById('p1-trait1-allele1').value || 'A';
-    const p1t1a2 = document.getElementById('p1-trait1-allele2').value || 'a';
-    const p1t2a1 = document.getElementById('p1-trait2-allele1').value || 'B';
-    const p1t2a2 = document.getElementById('p1-trait2-allele2').value || 'b';
-
-    // Parent 2
-    const p2t1a1 = document.getElementById('p2-trait1-allele1').value || 'A';
-    const p2t1a2 = document.getElementById('p2-trait1-allele2').value || 'b';
-    const p2t2a1 = document.getElementById('p2-trait2-allele1').value || 'B';
-    const p2t2a2 = document.getElementById('p2-trait2-allele2').value || 'b';
-
-    document.getElementById('display-p1-trait1').textContent = p1t1a1 + p1t1a2;
-    document.getElementById('display-p1-trait2').textContent = p1t2a1 + p1t2a2;
-    document.getElementById('display-p2-trait1').textContent = p2t1a1 + p2t1a2;
-    document.getElementById('display-p2-trait2').textContent = p2t2a1 + p2t2a2;
-
-    // Update edit section
-    document.getElementById('edit-p1-t1-a1').value = p1t1a1;
-    document.getElementById('edit-p1-t1-a2').value = p1t1a2;
-    document.getElementById('edit-p1-t2-a1').value = p1t2a1;
-    document.getElementById('edit-p1-t2-a2').value = p1t2a2;
-
-    document.getElementById('edit-p2-t1-a1').value = p2t1a1;
-    document.getElementById('edit-p2-t1-a2').value = p2t1a2;
-    document.getElementById('edit-p2-t2-a1').value = p2t2a1;
-    document.getElementById('edit-p2-t2-a2').value = p2t2a2;
+// Sort a 2-allele pair: uppercase before lowercase (dominant first by convention)
+function sortPair(a,b){
+  // If one is uppercase and other lowercase of same letter, uppercase first
+  if(a.toLowerCase()===b.toLowerCase()) return a<b?1:-1; // uppercase has lower char code? No: A=65,a=97. A<a so A goes first.
+  // For different letters, sort alphabetically by letter, then dom first
+  const la=a.toLowerCase(),lb=b.toLowerCase();
+  if(la!==lb) return la<lb?-1:1;
+  return a<b?1:-1;
 }
 
-function calculateTwoTraitSquare() {
-    // Get parent 1 alleles
-    const p1t1a1 = (document.getElementById('p1-trait1-allele1').value || 'A').toUpperCase();
-    const p1t1a2 = (document.getElementById('p1-trait1-allele2').value || 'a').toUpperCase();
-    const p1t2a1 = (document.getElementById('p1-trait2-allele1').value || 'B').toUpperCase();
-    const p1t2a2 = (document.getElementById('p1-trait2-allele2').value || 'b').toUpperCase();
-
-    // Get parent 2 alleles
-    const p2t1a1 = (document.getElementById('p2-trait1-allele1').value || 'A').toUpperCase();
-    const p2t1a2 = (document.getElementById('p2-trait1-allele2').value || 'b').toUpperCase();
-    const p2t2a1 = (document.getElementById('p2-trait2-allele1').value || 'B').toUpperCase();
-    const p2t2a2 = (document.getElementById('p2-trait2-allele2').value || 'b').toUpperCase();
-
-    // Get gametes
-    const parent1Gametes = [
-        p1t1a1 + p1t2a1,
-        p1t1a1 + p1t2a2,
-        p1t1a2 + p1t2a1,
-        p1t1a2 + p1t2a2
-    ];
-
-    const parent2Gametes = [
-        p2t1a1 + p2t2a1,
-        p2t1a1 + p2t2a2,
-        p2t1a2 + p2t2a1,
-        p2t1a2 + p2t2a2
-    ];
-
-    // Generate offspring
-    const offspring = [];
-    for (let g1 of parent1Gametes) {
-        for (let g2 of parent2Gametes) {
-            const genotype = g1 + g2;
-            offspring.push(genotype);
-        }
-    }
-
-    // Display results
-    displayTwoTraitResults(parent1Gametes, parent2Gametes, offspring);
+function sortGenotype(t1a,t1b,t2a,t2b){
+  const p1=[t1a,t1b].sort(sortPair);
+  const p2=[t2a,t2b].sort(sortPair);
+  return p1.join('')+p2.join('');
 }
 
-function displayTwoTraitResults(p1Gametes, p2Gametes, offspring) {
-    const container = document.getElementById('punnett-container');
-    const showType = document.querySelector('input[name="show-option"]:checked').value;
-    
-    container.innerHTML = '';
-    
-    const grid = document.createElement('div');
-    grid.className = 'square-grid';
-    grid.style.gridTemplateColumns = `repeat(${p2Gametes.length + 1}, minmax(100px, 1fr))`;
+function getGametes(t1a1,t1a2,t2a1,t2a2){
+  return[
+    t1a1+t2a1,
+    t1a1+t2a2,
+    t1a2+t2a1,
+    t1a2+t2a2
+  ];
+}
 
-    // Top-left empty cell
-    const emptyCell = document.createElement('div');
-    emptyCell.className = 'square-cell header';
-    emptyCell.textContent = '';
-    grid.appendChild(emptyCell);
+function combineGametes(g1,g2){
+  // g1 and g2 are each 2-char strings: trait1allele + trait2allele
+  return sortGenotype(g1[0],g2[0],g1[1],g2[1]);
+}
 
-    // Column headers (Parent 2 gametes)
-    p2Gametes.forEach(gamete => {
-        const header = document.createElement('div');
-        header.className = 'square-cell header';
-        header.textContent = gamete;
-        grid.appendChild(header);
+// ─── Dominance radio builder ───────────────────────────────────────────────
+function buildDomRadios(){
+  const t1a1=v('p1t1a1')||'A', t1a2=v('p1t1a2')||'a';
+  const t2a1=v('p1t2a1')||'B', t2a2=v('p1t2a2')||'b';
+  const alleles1=[...new Set([t1a1,t1a2,v('p2t1a1')||'A',v('p2t1a2')||'a'])];
+  const alleles2=[...new Set([t2a1,t2a2,v('p2t2a1')||'B',v('p2t2a2')||'b'])];
+
+  document.getElementById('dom-trait1-label').textContent=`Trait 1 (${t1a1}/${t1a2}) — dominant allele:`;
+  document.getElementById('dom-trait2-label').textContent=`Trait 2 (${t2a1}/${t2a2}) — dominant allele:`;
+
+  function makeGroup(groupId,name,alleles){
+    const g=document.getElementById(groupId);
+    const cur=g.querySelector('input:checked')?.value||'none';
+    g.innerHTML=`<label class="radio-pill"><input type="radio" name="${name}" value="none" ${cur==='none'?'checked':''}> None</label>`
+      +alleles.map(a=>`<label class="radio-pill"><input type="radio" name="${name}" value="${a}" ${cur===a?'checked':''}> ${a} dominant</label>`).join('');
+  }
+  makeGroup('dom-trait1-group','dom1',alleles1);
+  makeGroup('dom-trait2-group','dom2',alleles2);
+}
+
+// ─── Gamete preview ────────────────────────────────────────────────────────
+function syncPreview(){
+  const p1g=getGametes(v('p1t1a1')||'A',v('p1t1a2')||'a',v('p1t2a1')||'B',v('p1t2a2')||'b');
+  const p2g=getGametes(v('p2t1a1')||'A',v('p2t1a2')||'a',v('p2t2a1')||'B',v('p2t2a2')||'b');
+  document.getElementById('p1-gametes').innerHTML=`<strong>Gametes:</strong> ${p1g.join(', ')}`;
+  document.getElementById('p2-gametes').innerHTML=`<strong>Gametes:</strong> ${p2g.join(', ')}`;
+  buildDomRadios();
+}
+
+// ─── Phenotype logic ────────────────────────────────────────────────────────
+function getPhenotype(genotype){
+  const dom1=document.querySelector('input[name="dom1"]:checked')?.value||'none';
+  const dom2=document.querySelector('input[name="dom2"]:checked')?.value||'none';
+  const t1=genotype.slice(0,2);
+  const t2=genotype.slice(2,4);
+  const ph1=dom1!=='none'?(t1.includes(dom1)?dom1+'_':t1):t1;
+  const ph2=dom2!=='none'?(t2.includes(dom2)?dom2+'_':t2):t2;
+  return ph1+' '+ph2;
+}
+
+// ─── Error handling ─────────────────────────────────────────────────────────
+function showError(msg){
+  document.getElementById('error-container').innerHTML=`<div class="error-msg">⚠ ${msg}</div>`;
+}
+function clearError(){document.getElementById('error-container').innerHTML=''}
+
+// ─── Main calculate ─────────────────────────────────────────────────────────
+function calculate(){
+  clearError();
+
+  const p1t1a1=v('p1t1a1'), p1t1a2=v('p1t1a2');
+  const p1t2a1=v('p1t2a1'), p1t2a2=v('p1t2a2');
+  const p2t1a1=v('p2t1a1'), p2t1a2=v('p2t1a2');
+  const p2t2a1=v('p2t2a1'), p2t2a2=v('p2t2a2');
+
+  const allInputs=[p1t1a1,p1t1a2,p1t2a1,p1t2a2,p2t1a1,p2t1a2,p2t2a1,p2t2a2];
+  if(allInputs.some(x=>!x)){showError('All allele fields must be filled in before calculating.');return}
+  if(allInputs.some(x=>!/^[a-zA-Z]$/.test(x))){showError('Each allele must be a single letter (A–Z or a–z).');return}
+
+  const p1Gametes=getGametes(p1t1a1,p1t1a2,p1t2a1,p1t2a2);
+  const p2Gametes=getGametes(p2t1a1,p2t1a2,p2t2a1,p2t2a2);
+
+  // 16-cell cross
+  const cells=[];
+  for(const g1 of p1Gametes){
+    const row=[];
+    for(const g2 of p2Gametes){row.push(combineGametes(g1,g2))}
+    cells.push(row);
+  }
+
+  renderTable(p1Gametes,p2Gametes,cells);
+  renderProbabilities(cells.flat());
+
+  document.getElementById('results').style.display='block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ─── Table render ───────────────────────────────────────────────────────────
+function renderTable(p1g,p2g,cells){
+  const display=document.querySelector('input[name="display"]:checked').value;
+  const con=document.getElementById('table-container');
+
+  let html='<table class="punnett-table"><thead><tr><td class="corner"></td>';
+  p2g.forEach(g=>{html+=`<th class="col-header">${g}</th>`});
+  html+='</tr></thead><tbody>';
+
+  cells.forEach((row,ri)=>{
+    html+=`<tr><th class="row-header">${p1g[ri]}</th>`;
+    row.forEach(geno=>{
+      const pheno=getPhenotype(geno);
+      let inner='';
+      if(display==='genotype'){
+        inner=`<span class="cell-genotype">${geno}</span>`;
+      }else if(display==='phenotype'){
+        inner=`<span class="cell-genotype">${pheno}</span><span class="cell-sub">${geno}</span>`;
+      }else{
+        inner=`<span class="cell-genotype">${geno}</span><span class="cell-sub">${pheno}</span>`;
+      }
+      html+=`<td class="result-cell"><div class="cell-inner">${inner}</div></td>`;
     });
+    html+='</tr>';
+  });
 
-    // Rows with results
-    let cellIndex = 0;
-    p1Gametes.forEach(p1Gamete => {
-        // Row header (Parent 1 gamete)
-        const rowHeader = document.createElement('div');
-        rowHeader.className = 'square-cell header';
-        rowHeader.textContent = p1Gamete;
-        grid.appendChild(rowHeader);
-
-        // Result cells
-        p2Gametes.forEach(p2Gamete => {
-            const genotype = offspring[cellIndex];
-            const cell = document.createElement('div');
-            cell.className = 'square-cell result';
-
-            if (showType === 'genotype') {
-                cell.innerHTML = `<div>${formatGenotype(genotype)}</div>
-                    <div class="cell-genotype">${genotype}</div>`;
-            } else {
-                const phenotype = getPhenotype(genotype);
-                cell.innerHTML = `<div>${phenotype}</div>
-                    <div class="cell-phenotype">Genotype: ${formatGenotype(genotype)}</div>`;
-            }
-
-            grid.appendChild(cell);
-            cellIndex++;
-        });
-    });
-
-    container.appendChild(grid);
-
-    // Display probabilities
-    displayProbabilities(offspring);
-    document.getElementById('results-container').style.display = 'block';
+  html+='</tbody></table>';
+  con.innerHTML=html;
 }
 
-function formatGenotype(genotype) {
-    // Sort: Trait 1 first, then Trait 2
-    const trait1 = genotype.substring(0, 2);
-    const trait2 = genotype.substring(2, 4);
-    return trait1 + trait2;
+// ─── Probability render ─────────────────────────────────────────────────────
+function renderProbabilities(allOffspring){
+  const display=document.querySelector('input[name="display"]:checked').value;
+  const n=allOffspring.length; // should be 16
+  const counts={};
+  allOffspring.forEach(g=>{counts[g]=(counts[g]||0)+1});
+
+  // Group by phenotype if needed
+  let groupKey=g=>g;
+  if(display==='phenotype'){groupKey=g=>getPhenotype(g)}
+
+  const grouped={};
+  allOffspring.forEach(g=>{
+    const key=groupKey(g);
+    if(!grouped[key]){grouped[key]={count:0,genotypes:new Set()}}
+    grouped[key].count++;
+    grouped[key].genotypes.add(g);
+  });
+
+  const sorted=Object.entries(grouped).sort((a,b)=>b[1].count-a[1].count);
+
+  let html='';
+  sorted.forEach(([key,{count,genotypes}])=>{
+    const pct=((count/n)*100).toFixed(1);
+    const ratio=`${count}/16`;
+    const isGeno=display==='genotype'||display==='both';
+    const pheno=display==='phenotype'?key:getPhenotype(key);
+    html+=`<div class="prob-card">
+      <div class="prob-genotype">${isGeno?key:pheno}</div>
+      <div class="prob-pct">${pct}%</div>
+      <div class="prob-ratio">${ratio} offspring</div>
+      ${display!=='genotype'?`<div class="prob-pheno">${[...genotypes].join(', ')}</div>`:''}
+    </div>`;
+  });
+
+  document.getElementById('prob-grid').innerHTML=html;
+
+  // Summary bar
+  const uniqueGeno=Object.keys(counts).length;
+  const phenoCounts={};
+  allOffspring.forEach(g=>{const p=getPhenotype(g);phenoCounts[p]=(phenoCounts[p]||0)+1});
+  const uniquePheno=Object.keys(phenoCounts).length;
+  document.getElementById('summary-bar').innerHTML=
+    `<span>Total offspring: <strong>16</strong></span>
+     <span>Unique genotypes: <strong>${uniqueGeno}</strong></span>
+     <span>Unique phenotypes: <strong>${uniquePheno}</strong></span>
+     <span>Genotypic ratio: <strong>${Object.values(counts).join(' : ')}</strong></span>`;
 }
 
-function getPhenotype(genotype) {
-    // Simple phenotype mapping (customize based on dominant alleles)
-    const trait1Dom = document.querySelector('input[name="trait1-dominant"]:checked').value;
-    const trait2Dom = document.querySelector('input[name="trait2-dominant"]:checked').value;
-
-    const trait1 = genotype.substring(0, 2);
-    const trait2 = genotype.substring(2, 4);
-
-    let pheno1 = trait1;
-    let pheno2 = trait2;
-
-    if (trait1Dom !== 'none') {
-        pheno1 = showsDominant(trait1, trait1Dom) ? `${trait1Dom}_` : trait1;
-    }
-    if (trait2Dom !== 'none') {
-        pheno2 = showsDominant(trait2, trait2Dom) ? `${trait2Dom}_` : trait2;
-    }
-
-    return `${pheno1}${pheno2}`;
-}
-
-function showsDominant(genotype, dominant) {
-    return genotype.includes(dominant);
-}
-
-function displayProbabilities(offspring) {
-    const container = document.getElementById('probabilities-container');
-    const showType = document.querySelector('input[name="show-option"]:checked').value;
-    
-    container.innerHTML = '';
-
-    const counts = {};
-    offspring.forEach(genotype => {
-        const key = formatGenotype(genotype);
-        counts[key] = (counts[key] || 0) + 1;
-    });
-
-    Object.keys(counts).sort().forEach(genotype => {
-        const percentage = ((counts[genotype] / offspring.length) * 100).toFixed(1);
-        const item = document.createElement('div');
-        item.className = 'probability-item';
-
-        if (showType === 'genotype') {
-            item.innerHTML = `
-                <div class="genotype">${genotype}</div>
-                <div class="percentage">${percentage}%</div>
-            `;
-        } else {
-            const phenotype = getPhenotypeFromGenotype(genotype);
-            item.innerHTML = `
-                <div class="genotype">${phenotype}</div>
-                <div class="percentage">${percentage}%</div>
-                <div class="phenotype">Genotype: ${genotype}</div>
-            `;
-        }
-
-        container.appendChild(item);
-    });
-}
-
-function getPhenotypeFromGenotype(genotype) {
-    const trait1Dom = document.querySelector('input[name="trait1-dominant"]:checked').value;
-    const trait2Dom = document.querySelector('input[name="trait2-dominant"]:checked').value;
-
-    const trait1 = genotype.substring(0, 2);
-    const trait2 = genotype.substring(2, 4);
-
-    let pheno1 = trait1;
-    let pheno2 = trait2;
-
-    if (trait1Dom !== 'none') {
-        pheno1 = trait1.includes(trait1Dom) ? `${trait1Dom}_` : trait1;
-    }
-    if (trait2Dom !== 'none') {
-        pheno2 = trait2.includes(trait2Dom) ? `${trait2Dom}_` : trait2;
-    }
-
-    return `${pheno1}${pheno2}`;
-}
-
-// Initialize display on page load
-window.addEventListener('load', updateParentDisplay);
+// ─── Init ────────────────────────────────────────────────────────────────────
+syncPreview();
 </script>
 </body>
 </html>
