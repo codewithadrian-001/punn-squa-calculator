@@ -63,67 +63,13 @@ body {
     font-weight: 300;
 }
 
-/* Tab Navigation */
-.tabs {
-    display: flex;
-    background: var(--light-bg);
-    border-bottom: 2px solid var(--border-color);
-    flex-wrap: wrap;
-}
-
-.tab-button {
-    flex: 1;
-    padding: 16px 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
-    color: #666;
-    transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
-    min-width: 120px;
-}
-
-.tab-button:hover {
-    background: rgba(46, 125, 50, 0.05);
-    color: var(--primary-color);
-}
-
-.tab-button.active {
-    color: white;
-    background: var(--primary-color);
-    border-bottom-color: var(--secondary-color);
-}
-
 /* Main Content */
 .main-content {
     padding: 40px 20px;
 }
 
-.tab-content {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Calculator Section */
 .calculator-section {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -137,6 +83,51 @@ body {
     color: #666;
     margin-bottom: 30px;
     font-size: 0.95em;
+}
+
+/* Parent Display Section */
+.parent-display-section {
+    background: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.parent-display-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.parent-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.parent-card {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.parent-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.trait-display {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.trait-display strong {
+    color: var(--dark-text);
+    display: inline-block;
+    min-width: 60px;
 }
 
 /* Input Section */
@@ -162,24 +153,177 @@ body {
     color: var(--dark-text);
 }
 
-.parent-input select {
-    padding: 12px 15px;
+.trait-input-group {
+    margin-bottom: 15px;
+}
+
+.trait-input-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: var(--dark-text);
+    font-size: 0.95em;
+}
+
+.trait-input-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.trait-input-controls input {
+    flex: 1;
+    padding: 8px 12px;
     border: 2px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 1em;
-    background: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-.parent-input select:hover {
-    border-color: var(--primary-color);
-}
-
-.parent-input select:focus {
+.trait-input-controls input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1);
+}
+
+.allele-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.allele-btn {
+    padding: 6px 12px;
+    border: 2px solid var(--border-color);
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+}
+
+.allele-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.allele-btn.selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Edit Alleles Section */
+.edit-alleles-section {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid var(--secondary-color);
+    margin-bottom: 30px;
+}
+
+.edit-alleles-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.edit-parent {
+    margin-bottom: 20px;
+}
+
+.edit-parent h4 {
+    color: var(--dark-text);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.edit-trait-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.edit-trait-input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    background: var(--light-bg);
+}
+
+.edit-trait-input:disabled {
+    background: #e8e8e8;
+    color: #999;
+}
+
+/* Dominant Alleles Section */
+.dominant-alleles-section {
+    background: rgba(255, 152, 0, 0.05);
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid var(--warning-color);
+    margin-bottom: 30px;
+}
+
+.dominant-alleles-section h3 {
+    color: var(--warning-color);
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.dominant-trait {
+    margin-bottom: 15px;
+}
+
+.dominant-trait label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.dominant-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.radio-option input[type="radio"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.radio-option label {
+    margin: 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+/* Show Options Section */
+.show-options-section {
+    background: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.show-options-section h4 {
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-weight: 700;
 }
 
 /* Button */
@@ -222,7 +366,7 @@ body {
     }
     to {
         opacity: 1;
-        max-height: 1000px;
+        max-height: 2000px;
     }
 }
 
@@ -233,6 +377,7 @@ body {
     border-radius: 8px;
     border: 2px solid var(--primary-color);
     margin-bottom: 30px;
+    overflow-x: auto;
 }
 
 .punnett-square h3 {
@@ -242,11 +387,9 @@ body {
 }
 
 .square-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: inline-grid;
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
     gap: 2px;
-    max-width: 350px;
-    margin: 0 auto;
     background: var(--primary-color);
     padding: 2px;
     border-radius: 4px;
@@ -254,45 +397,41 @@ body {
 
 .square-cell {
     background: white;
-    padding: 15px;
+    padding: 12px;
     text-align: center;
     font-weight: 600;
-    min-height: 100px;
+    min-height: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 2px;
+    font-size: 0.9em;
 }
 
 .square-cell.header {
     background: var(--primary-color);
     color: white;
     font-weight: 700;
-}
-
-.header-icon {
-    font-size: 2.5em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 0.85em;
 }
 
 .square-cell.result {
     background: rgba(46, 125, 50, 0.05);
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-.cell-icon {
-    font-size: 2.5em;
-    margin-bottom: 8px;
+    border: 1px solid var(--primary-color);
 }
 
 .cell-genotype {
     font-size: 0.75em;
     color: #999;
-    margin-top: 5px;
+    margin-top: 4px;
+}
+
+.cell-phenotype {
+    font-size: 0.85em;
+    color: var(--secondary-color);
+    margin-top: 4px;
 }
 
 /* Probability Results */
@@ -321,7 +460,7 @@ body {
     border-radius: 6px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-top: 4px solid;
+    border-top: 4px solid var(--primary-color);
     transition: all 0.3s ease;
 }
 
@@ -330,15 +469,10 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.probability-icon {
-    font-size: 3em;
-    margin-bottom: 10px;
-}
-
-.probability-item .trait {
+.probability-item .genotype {
     font-weight: 700;
     color: var(--primary-color);
-    font-size: 0.95em;
+    font-size: 1em;
     margin-bottom: 8px;
 }
 
@@ -348,68 +482,11 @@ body {
     color: var(--secondary-color);
 }
 
-.probability-item .genotype {
-    font-size: 0.85em;
-    color: #999;
+.probability-item .phenotype {
+    font-size: 0.9em;
+    color: #666;
     margin-top: 8px;
-}
-
-/* Info Section */
-.info-section {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.info-section h2 {
-    color: var(--primary-color);
-    margin-bottom: 30px;
-    font-size: 1.8em;
-}
-
-.info-card {
-    background: white;
-    padding: 25px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border-left: 5px solid var(--primary-color);
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-}
-
-.info-card:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
-}
-
-.info-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 12px;
-    font-size: 1.2em;
-}
-
-.info-card p {
-    color: #555;
-    margin-bottom: 10px;
-    line-height: 1.7;
-}
-
-.info-card ul, .info-card ol {
-    margin-left: 20px;
-    margin-top: 10px;
-}
-
-.info-card li {
-    color: #555;
-    margin-bottom: 8px;
-}
-
-.info-card.warning {
-    border-left-color: var(--warning-color);
-    background: rgba(255, 152, 0, 0.05);
-}
-
-.info-card.warning h3 {
-    color: var(--warning-color);
+    font-style: italic;
 }
 
 /* Footer */
@@ -441,49 +518,35 @@ body {
         font-size: 0.95em;
     }
 
-    .tabs {
-        flex-direction: column;
-    }
-
-    .tab-button {
-        text-align: left;
-        border-bottom: 2px solid transparent !important;
-        border-left: 3px solid transparent;
-    }
-
-    .tab-button.active {
-        border-left-color: var(--secondary-color);
-        border-bottom-color: transparent;
-    }
-
     .input-section {
         grid-template-columns: 1fr;
         padding: 15px;
+    }
+
+    .parent-display {
+        grid-template-columns: 1fr;
     }
 
     .main-content {
         padding: 20px 15px;
     }
 
-    .calculator-section h2 {
-        font-size: 1.4em;
+    .edit-trait-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .square-grid {
+        grid-template-columns: repeat(4, minmax(80px, 1fr));
     }
 
     .probabilities {
         grid-template-columns: 1fr;
     }
 
-    .info-card {
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-
-    .cell-icon {
-        font-size: 2em;
-    }
-
-    .probability-icon {
-        font-size: 2.5em;
+    .square-cell {
+        padding: 10px;
+        min-height: 80px;
+        font-size: 0.8em;
     }
 }
 
@@ -496,42 +559,27 @@ body {
         font-size: 0.85em;
     }
 
-    .tab-button {
-        padding: 12px 10px;
-        font-size: 0.9em;
-        min-width: 80px;
-    }
-
     .calculate-btn {
         padding: 12px 20px;
         font-size: 0.95em;
     }
 
     .square-grid {
-        max-width: 280px;
+        grid-template-columns: repeat(3, minmax(70px, 1fr));
     }
 
     .square-cell {
-        padding: 12px;
-        min-height: 90px;
+        padding: 8px;
+        min-height: 70px;
+        font-size: 0.7em;
     }
 
-    .header-icon {
-        font-size: 2em;
+    .edit-trait-row {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .cell-icon {
-        font-size: 1.8em;
-        margin-bottom: 5px;
-    }
-
-    .probability-icon {
-        font-size: 2em;
-        margin-bottom: 8px;
-    }
-
-    .probability-item .percentage {
-        font-size: 1.8em;
+    .dominant-options {
+        flex-direction: column;
     }
 }
     </style>
@@ -542,186 +590,187 @@ body {
         <header class="header">
             <div class="header-content">
                 <h1>🧬 Punnett Square Calculator</h1>
-                <p class="subtitle">Predict Inherited Traits: Hair Color, Eye Color & Skin Tone</p>
+                <p class="subtitle">Custom 2-Trait Genetic Inheritance Predictor</p>
             </div>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Tab Navigation -->
-            <div class="tabs">
-                <button class="tab-button active" data-tab="hair-color">Hair Color</button>
-                <button class="tab-button" data-tab="eye-color">Eye Color</button>
-                <button class="tab-button" data-tab="skin-tone">Skin Tone</button>
-                <button class="tab-button" data-tab="info">About Genetics</button>
-            </div>
-
-            <!-- Hair Color Tab -->
-            <div class="tab-content active" id="hair-color-tab">
-                <div class="calculator-section">
-                    <h2>Hair Color Inheritance Calculator</h2>
-                    <p class="info-text">Hair color is determined by multiple genes. This calculator uses a simplified dominant/recessive model.</p>
-                    
-                    <div class="input-section">
-                        <div class="parent-input">
-                            <label for="hair-parent1">Parent 1 Hair Color:</label>
-                            <select id="hair-parent1">
-                                <option value="">Select Hair Color</option>
-                                <option value="BB">⬛ Black Hair</option>
-                                <option value="Bb">🟤 Brown Hair</option>
-                                <option value="bb">🟡 Blonde Hair</option>
-                            </select>
+            <div class="calculator-section">
+                <h2>Two-Trait Punnett Square Calculator</h2>
+                <p class="info-text">Create custom traits and predict offspring inheritance patterns with two independent traits.</p>
+                
+                <!-- Parent Display Section -->
+                <div class="parent-display-section">
+                    <h3>Pwede ma adaan like</h3>
+                    <div class="parent-display">
+                        <div class="parent-card">
+                            <h4>Parent A</h4>
+                            <div class="trait-display">
+                                <strong>TRAIT 1:</strong> <span id="display-p1-trait1"></span>
+                            </div>
+                            <div class="trait-display">
+                                <strong>TRAIT 2:</strong> <span id="display-p1-trait2"></span>
+                            </div>
                         </div>
-
-                        <div class="parent-input">
-                            <label for="hair-parent2">Parent 2 Hair Color:</label>
-                            <select id="hair-parent2">
-                                <option value="">Select Hair Color</option>
-                                <option value="BB">⬛ Black Hair</option>
-                                <option value="Bb">🟤 Brown Hair</option>
-                                <option value="bb">🟡 Blonde Hair</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button class="calculate-btn" onclick="calculateHairColor()">Calculate Results</button>
-
-                    <div id="hair-results" class="results-section" style="display: none;">
-                        <div class="punnett-square">
-                            <h3>Punnett Square - Possible Offspring Traits</h3>
-                            <div id="hair-punnett" class="square-grid"></div>
-                        </div>
-
-                        <div class="probability-results">
-                            <h3>Predicted Offspring Hair Color</h3>
-                            <div id="hair-probabilities" class="probabilities"></div>
+                        <div class="parent-card">
+                            <h4>Parent B</h4>
+                            <div class="trait-display">
+                                <strong>TRAIT 1:</strong> <span id="display-p2-trait1"></span>
+                            </div>
+                            <div class="trait-display">
+                                <strong>TRAIT 2:</strong> <span id="display-p2-trait2"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Eye Color Tab -->
-            <div class="tab-content" id="eye-color-tab">
-                <div class="calculator-section">
-                    <h2>Eye Color Inheritance Calculator</h2>
-                    <p class="info-text">Eye color is primarily determined by melanin amount. Brown is dominant over blue.</p>
-                    
-                    <div class="input-section">
-                        <div class="parent-input">
-                            <label for="eye-parent1">Parent 1 Eye Color:</label>
-                            <select id="eye-parent1">
-                                <option value="">Select Eye Color</option>
-                                <option value="BB">👁️ Brown Eyes</option>
-                                <option value="Bb">👁️ Brown Eyes (Carrier)</option>
-                                <option value="bb">👁️ Blue Eyes</option>
-                            </select>
+                <!-- Input Section -->
+                <div class="input-section">
+                    <div class="parent-input">
+                        <label>Parent 1 Alleles:</label>
+                        
+                        <div class="trait-input-group">
+                            <label>Trait 1</label>
+                            <div class="trait-input-controls">
+                                <input type="text" id="p1-trait1-allele1" maxlength="1" placeholder="A" value="A">
+                                <input type="text" id="p1-trait1-allele2" maxlength="1" placeholder="a" value="a">
+                            </div>
                         </div>
 
-                        <div class="parent-input">
-                            <label for="eye-parent2">Parent 2 Eye Color:</label>
-                            <select id="eye-parent2">
-                                <option value="">Select Eye Color</option>
-                                <option value="BB">👁️ Brown Eyes</option>
-                                <option value="Bb">👁️ Brown Eyes (Carrier)</option>
-                                <option value="bb">👁️ Blue Eyes</option>
-                            </select>
+                        <div class="trait-input-group">
+                            <label>Trait 2</label>
+                            <div class="trait-input-controls">
+                                <input type="text" id="p1-trait2-allele1" maxlength="1" placeholder="B" value="B">
+                                <input type="text" id="p1-trait2-allele2" maxlength="1" placeholder="b" value="b">
+                            </div>
                         </div>
                     </div>
 
-                    <button class="calculate-btn" onclick="calculateEyeColor()">Calculate Results</button>
-
-                    <div id="eye-results" class="results-section" style="display: none;">
-                        <div class="punnett-square">
-                            <h3>Punnett Square - Possible Offspring Traits</h3>
-                            <div id="eye-punnett" class="square-grid"></div>
+                    <div class="parent-input">
+                        <label>Parent 2 Alleles:</label>
+                        
+                        <div class="trait-input-group">
+                            <label>Trait 1</label>
+                            <div class="trait-input-controls">
+                                <input type="text" id="p2-trait1-allele1" maxlength="1" placeholder="A" value="A">
+                                <input type="text" id="p2-trait1-allele2" maxlength="1" placeholder="b" value="b">
+                            </div>
                         </div>
 
-                        <div class="probability-results">
-                            <h3>Predicted Offspring Eye Color</h3>
-                            <div id="eye-probabilities" class="probabilities"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skin Tone Tab -->
-            <div class="tab-content" id="skin-tone-tab">
-                <div class="calculator-section">
-                    <h2>Skin Tone Inheritance Calculator</h2>
-                    <p class="info-text">Skin tone is determined by melanin levels controlled by multiple genes. This uses a simplified model.</p>
-                    
-                    <div class="input-section">
-                        <div class="parent-input">
-                            <label for="skin-parent1">Parent 1 Skin Tone:</label>
-                            <select id="skin-parent1">
-                                <option value="">Select Skin Tone</option>
-                                <option value="AA">🧑‍🦱 Very Dark Skin</option>
-                                <option value="Aa">🧑 Dark Skin</option>
-                                <option value="aa">🧑‍🦰 Light Skin</option>
-                            </select>
-                        </div>
-
-                        <div class="parent-input">
-                            <label for="skin-parent2">Parent 2 Skin Tone:</label>
-                            <select id="skin-parent2">
-                                <option value="">Select Skin Tone</option>
-                                <option value="AA">🧑‍🦱 Very Dark Skin</option>
-                                <option value="Aa">🧑 Dark Skin</option>
-                                <option value="aa">🧑‍🦰 Light Skin</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button class="calculate-btn" onclick="calculateSkinTone()">Calculate Results</button>
-
-                    <div id="skin-results" class="results-section" style="display: none;">
-                        <div class="punnett-square">
-                            <h3>Punnett Square - Possible Offspring Traits</h3>
-                            <div id="skin-punnett" class="square-grid"></div>
-                        </div>
-
-                        <div class="probability-results">
-                            <h3>Predicted Offspring Skin Tone</h3>
-                            <div id="skin-probabilities" class="probabilities"></div>
+                        <div class="trait-input-group">
+                            <label>Trait 2</label>
+                            <div class="trait-input-controls">
+                                <input type="text" id="p2-trait2-allele1" maxlength="1" placeholder="B" value="B">
+                                <input type="text" id="p2-trait2-allele2" maxlength="1" placeholder="b" value="b">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- About Genetics Tab -->
-            <div class="tab-content" id="info-tab">
-                <div class="info-section">
-                    <h2>Understanding Genetics & Inheritance</h2>
+                <!-- Edit Alleles Section -->
+                <div class="edit-alleles-section">
+                    <h3>Edit Alleles:</h3>
                     
-                    <div class="info-card">
-                        <h3>What is a Punnett Square?</h3>
-                        <p>A Punnett square is a diagram used to predict the genotypes of offspring from a cross between two parents. It shows all possible combinations of alleles (gene variants) that could be inherited.</p>
+                    <div class="edit-parent">
+                        <h4>Parent 1:</h4>
+                        <div class="edit-trait-row">
+                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 1</div>
+                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 2</div>
+                            <input type="text" class="edit-trait-input" id="edit-p1-t1-a1" maxlength="1" value="A">
+                            <input type="text" class="edit-trait-input" id="edit-p1-t2-a1" maxlength="1" value="B">
+                        </div>
+                        <div class="edit-trait-row">
+                            <div style="text-align: center; font-weight: 600; color: #999;">A</div>
+                            <div style="text-align: center; font-weight: 600; color: #999;">B</div>
+                            <input type="text" class="edit-trait-input" id="edit-p1-t1-a2" maxlength="1" value="a">
+                            <input type="text" class="edit-trait-input" id="edit-p1-t2-a2" maxlength="1" value="b">
+                        </div>
                     </div>
 
-                    <div class="info-card">
-                        <h3>Dominant vs. Recessive Traits</h3>
-                        <p><strong>Dominant:</strong> A trait that appears in the offspring even if inherited from just one parent.</p>
-                        <p><strong>Recessive:</strong> A trait that only appears when inherited from both parents.</p>
+                    <div class="edit-parent">
+                        <h4>Parent 2:</h4>
+                        <div class="edit-trait-row">
+                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 1</div>
+                            <div style="text-align: center; font-weight: 600; color: #999;">Trait 2</div>
+                            <input type="text" class="edit-trait-input" id="edit-p2-t1-a1" maxlength="1" value="A">
+                            <input type="text" class="edit-trait-input" id="edit-p2-t2-a1" maxlength="1" value="B">
+                        </div>
+                        <div class="edit-trait-row">
+                            <div style="text-align: center; font-weight: 600; color: #999;">b</div>
+                            <div style="text-align: center; font-weight: 600; color: #999;">b</div>
+                            <input type="text" class="edit-trait-input" id="edit-p2-t1-a2" maxlength="1" value="b">
+                            <input type="text" class="edit-trait-input" id="edit-p2-t2-a2" maxlength="1" value="b">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dominant Alleles Section -->
+                <div class="dominant-alleles-section">
+                    <h3>Dominant Alleles:</h3>
+                    
+                    <div class="dominant-trait">
+                        <label>Trait 1:</label>
+                        <div class="dominant-options">
+                            <div class="radio-option">
+                                <input type="radio" id="trait1-none" name="trait1-dominant" value="none" checked>
+                                <label for="trait1-none">⭕None</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="trait1-A" name="trait1-dominant" value="A">
+                                <label for="trait1-A">Ⓐ A</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="trait1-a" name="trait1-dominant" value="a">
+                                <label for="trait1-a">Ⓐ a</label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="info-card">
-                        <h3>Hair Color Inheritance</h3>
-                        <p>Hair color is controlled by the MC1R gene and other genes that produce melanin. Black and brown hair are dominant over blonde hair.</p>
+                    <div class="dominant-trait">
+                        <label>Trait 2:</label>
+                        <div class="dominant-options">
+                            <div class="radio-option">
+                                <input type="radio" id="trait2-none" name="trait2-dominant" value="none" checked>
+                                <label for="trait2-none">⭕None</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="trait2-B" name="trait2-dominant" value="B">
+                                <label for="trait2-B">Ⓑ B</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="trait2-b" name="trait2-dominant" value="b">
+                                <label for="trait2-b">Ⓑ b</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Show Options Section -->
+                <div class="show-options-section">
+                    <h4>Show:</h4>
+                    <div class="radio-option">
+                        <input type="radio" id="show-genotype" name="show-option" value="genotype" checked>
+                        <label for="show-genotype">⭕Genotype</label>
+                    </div>
+                    <div class="radio-option" style="margin-left: 20px;">
+                        <input type="radio" id="show-phenotype" name="show-option" value="phenotype">
+                        <label for="show-phenotype">⭕ Phenotype</label>
+                    </div>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateTwoTraitSquare()">Calculate Results</button>
+
+                <!-- Results Section -->
+                <div id="results-container" class="results-section" style="display: none;">
+                    <div class="punnett-square">
+                        <h3>Para 4 ka column ang kwan table</h3>
+                        <div id="punnett-container" style="overflow-x: auto;"></div>
                     </div>
 
-                    <div class="info-card">
-                        <h3>Eye Color Inheritance</h3>
-                        <p>The OCA2 gene is primarily responsible for eye color. Brown eyes are dominant over blue eyes.</p>
-                    </div>
-
-                    <div class="info-card">
-                        <h3>Skin Tone Inheritance</h3>
-                        <p>Skin tone is determined by melanin levels, controlled by multiple genes. Both parents contribute to the offspring's skin tone.</p>
-                    </div>
-
-                    <div class="info-card warning">
-                        <h3>⚠️ Important Disclaimer</h3>
-                        <p>This calculator uses simplified genetic models for educational purposes. Real genetics is much more complex. These predictions are approximate and not guaranteed.</p>
+                    <div class="probability-results">
+                        <h3>Offspring Probability Results</h3>
+                        <div id="probabilities-container" class="probabilities"></div>
                     </div>
                 </div>
             </div>
@@ -734,206 +783,233 @@ body {
         </footer>
     </div>
 
-<!-- FIXED JAVASCRIPT SECTION -->
+<!-- JAVASCRIPT SECTION -->
 <script>
-// TAB SWITCHING
-document.querySelectorAll('.tab-button').forEach(button => {
-    button.addEventListener('click', function (e) {
-        const tabName = this.getAttribute('data-tab');
-        switchTab(tabName, this);
-    });
+// Update display when inputs change
+document.querySelectorAll('input[type="text"]').forEach(input => {
+    input.addEventListener('change', updateParentDisplay);
 });
 
-function switchTab(tabName, clickedButton) {
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-    });
+function updateParentDisplay() {
+    // Parent 1
+    const p1t1a1 = document.getElementById('p1-trait1-allele1').value || 'A';
+    const p1t1a2 = document.getElementById('p1-trait1-allele2').value || 'a';
+    const p1t2a1 = document.getElementById('p1-trait2-allele1').value || 'B';
+    const p1t2a2 = document.getElementById('p1-trait2-allele2').value || 'b';
 
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    // Parent 2
+    const p2t1a1 = document.getElementById('p2-trait1-allele1').value || 'A';
+    const p2t1a2 = document.getElementById('p2-trait1-allele2').value || 'b';
+    const p2t2a1 = document.getElementById('p2-trait2-allele1').value || 'B';
+    const p2t2a2 = document.getElementById('p2-trait2-allele2').value || 'b';
 
-    document.getElementById(tabName + '-tab').classList.add('active');
-    clickedButton.classList.add('active');
+    document.getElementById('display-p1-trait1').textContent = p1t1a1 + p1t1a2;
+    document.getElementById('display-p1-trait2').textContent = p1t2a1 + p1t2a2;
+    document.getElementById('display-p2-trait1').textContent = p2t1a1 + p2t1a2;
+    document.getElementById('display-p2-trait2').textContent = p2t2a1 + p2t2a2;
+
+    // Update edit section
+    document.getElementById('edit-p1-t1-a1').value = p1t1a1;
+    document.getElementById('edit-p1-t1-a2').value = p1t1a2;
+    document.getElementById('edit-p1-t2-a1').value = p1t2a1;
+    document.getElementById('edit-p1-t2-a2').value = p1t2a2;
+
+    document.getElementById('edit-p2-t1-a1').value = p2t1a1;
+    document.getElementById('edit-p2-t1-a2').value = p2t1a2;
+    document.getElementById('edit-p2-t2-a1').value = p2t2a1;
+    document.getElementById('edit-p2-t2-a2').value = p2t2a2;
 }
 
-// CALCULATORS
-function calculateHairColor() {
-    const parent1 = document.getElementById('hair-parent1').value;
-    const parent2 = document.getElementById('hair-parent2').value;
+function calculateTwoTraitSquare() {
+    // Get parent 1 alleles
+    const p1t1a1 = (document.getElementById('p1-trait1-allele1').value || 'A').toUpperCase();
+    const p1t1a2 = (document.getElementById('p1-trait1-allele2').value || 'a').toUpperCase();
+    const p1t2a1 = (document.getElementById('p1-trait2-allele1').value || 'B').toUpperCase();
+    const p1t2a2 = (document.getElementById('p1-trait2-allele2').value || 'b').toUpperCase();
 
-    if (!parent1 || !parent2) {
-        alert('Please select hair color for both parents');
-        return;
-    }
+    // Get parent 2 alleles
+    const p2t1a1 = (document.getElementById('p2-trait1-allele1').value || 'A').toUpperCase();
+    const p2t1a2 = (document.getElementById('p2-trait1-allele2').value || 'b').toUpperCase();
+    const p2t2a1 = (document.getElementById('p2-trait2-allele1').value || 'B').toUpperCase();
+    const p2t2a2 = (document.getElementById('p2-trait2-allele2').value || 'b').toUpperCase();
 
-    const results = generatePunnettSquare(parent1, parent2);
-    displayVisualResults(results, 'hair', getHairColorMap());
-}
+    // Get gametes
+    const parent1Gametes = [
+        p1t1a1 + p1t2a1,
+        p1t1a1 + p1t2a2,
+        p1t1a2 + p1t2a1,
+        p1t1a2 + p1t2a2
+    ];
 
-function calculateEyeColor() {
-    const parent1 = document.getElementById('eye-parent1').value;
-    const parent2 = document.getElementById('eye-parent2').value;
+    const parent2Gametes = [
+        p2t1a1 + p2t2a1,
+        p2t1a1 + p2t2a2,
+        p2t1a2 + p2t2a1,
+        p2t1a2 + p2t2a2
+    ];
 
-    if (!parent1 || !parent2) {
-        alert('Please select eye color for both parents');
-        return;
-    }
-
-    const results = generatePunnettSquare(parent1, parent2);
-    displayVisualResults(results, 'eye', getEyeColorMap());
-}
-
-function calculateSkinTone() {
-    const parent1 = document.getElementById('skin-parent1').value;
-    const parent2 = document.getElementById('skin-parent2').value;
-
-    if (!parent1 || !parent2) {
-        alert('Please select skin tone for both parents');
-        return;
-    }
-
-    const results = generatePunnettSquare(parent1, parent2);
-    displayVisualResults(results, 'skin', getSkinToneMap());
-}
-
-// GENERATE PUNNETT SQUARE
-function generatePunnettSquare(parent1, parent2) {
-    const alleles1 = parent1.split('');
-    const alleles2 = parent2.split('');
-
+    // Generate offspring
     const offspring = [];
-
-    for (let a1 of alleles1) {
-        for (let a2 of alleles2) {
-            offspring.push(normalizeGenotype(a1 + a2));
+    for (let g1 of parent1Gametes) {
+        for (let g2 of parent2Gametes) {
+            const genotype = g1 + g2;
+            offspring.push(genotype);
         }
     }
 
-    return {
-        parent1,
-        parent2,
-        offspring,
-        alleles1,
-        alleles2
-    };
+    // Display results
+    displayTwoTraitResults(parent1Gametes, parent2Gametes, offspring);
 }
 
-// TRAIT MAPS
-function getHairColorMap() {
-    return {
-        'BB': { trait: 'Black Hair', icon: '⬛', color: '#000000' },
-        'Bb': { trait: 'Brown Hair', icon: '🟤', color: '#8B4513' },
-        'bb': { trait: 'Blonde Hair', icon: '🟡', color: '#FFD700' }
-    };
-}
-
-function getEyeColorMap() {
-    return {
-        'BB': { trait: 'Brown Eyes', icon: '🟤', color: '#8B4513' },
-        'Bb': { trait: 'Brown Eyes', icon: '🟤', color: '#8B4513' },
-        'bb': { trait: 'Blue Eyes', icon: '🔵', color: '#4169E1' }
-    };
-}
-
-function getSkinToneMap() {
-    return {
-        'AA': { trait: 'Very Dark Skin', icon: '🧑🏿', color: '#3E2723' },
-        'Aa': { trait: 'Dark Skin', icon: '🧑🏾', color: '#795548' },
-        'aa': { trait: 'Light Skin', icon: '🧑🏻', color: '#D7CCC8' }
-    };
-}
-
-// DISPLAY RESULTS
-function displayVisualResults(results, type, colorMap) {
-    const punnettContainer = document.getElementById(type + '-punnett');
-    const probabilitiesContainer = document.getElementById(type + '-probabilities');
-    const resultsSection = document.getElementById(type + '-results');
-
-    punnettContainer.innerHTML = '';
+function displayTwoTraitResults(p1Gametes, p2Gametes, offspring) {
+    const container = document.getElementById('punnett-container');
+    const showType = document.querySelector('input[name="show-option"]:checked').value;
+    
+    container.innerHTML = '';
+    
+    const grid = document.createElement('div');
+    grid.className = 'square-grid';
+    grid.style.gridTemplateColumns = `repeat(${p2Gametes.length + 1}, minmax(100px, 1fr))`;
 
     // Top-left empty cell
     const emptyCell = document.createElement('div');
     emptyCell.className = 'square-cell header';
-    punnettContainer.appendChild(emptyCell);
+    emptyCell.textContent = '';
+    grid.appendChild(emptyCell);
 
-    // Column headers
-    results.alleles2.forEach(allele => {
+    // Column headers (Parent 2 gametes)
+    p2Gametes.forEach(gamete => {
         const header = document.createElement('div');
         header.className = 'square-cell header';
-        header.textContent = allele;
-        punnettContainer.appendChild(header);
+        header.textContent = gamete;
+        grid.appendChild(header);
     });
 
-    // Rows
-    for (let i = 0; i < results.alleles1.length; i++) {
+    // Rows with results
+    let cellIndex = 0;
+    p1Gametes.forEach(p1Gamete => {
+        // Row header (Parent 1 gamete)
         const rowHeader = document.createElement('div');
         rowHeader.className = 'square-cell header';
-        rowHeader.textContent = results.alleles1[i];
-        punnettContainer.appendChild(rowHeader);
+        rowHeader.textContent = p1Gamete;
+        grid.appendChild(rowHeader);
 
-        for (let j = 0; j < results.alleles2.length; j++) {
-            const genotype = normalizeGenotype(results.alleles1[i] + results.alleles2[j]);
-            const traitData = colorMap[genotype];
-
+        // Result cells
+        p2Gametes.forEach(p2Gamete => {
+            const genotype = offspring[cellIndex];
             const cell = document.createElement('div');
             cell.className = 'square-cell result';
-            cell.style.borderColor = traitData.color;
 
-            cell.innerHTML = `
-                <div class="cell-icon">${traitData.icon}</div>
-                <div>${traitData.trait}</div>
-                <div class="cell-genotype">${genotype}</div>
-            `;
+            if (showType === 'genotype') {
+                cell.innerHTML = `<div>${formatGenotype(genotype)}</div>
+                    <div class="cell-genotype">${genotype}</div>`;
+            } else {
+                const phenotype = getPhenotype(genotype);
+                cell.innerHTML = `<div>${phenotype}</div>
+                    <div class="cell-phenotype">Genotype: ${formatGenotype(genotype)}</div>`;
+            }
 
-            punnettContainer.appendChild(cell);
-        }
+            grid.appendChild(cell);
+            cellIndex++;
+        });
+    });
+
+    container.appendChild(grid);
+
+    // Display probabilities
+    displayProbabilities(offspring);
+    document.getElementById('results-container').style.display = 'block';
+}
+
+function formatGenotype(genotype) {
+    // Sort: Trait 1 first, then Trait 2
+    const trait1 = genotype.substring(0, 2);
+    const trait2 = genotype.substring(2, 4);
+    return trait1 + trait2;
+}
+
+function getPhenotype(genotype) {
+    // Simple phenotype mapping (customize based on dominant alleles)
+    const trait1Dom = document.querySelector('input[name="trait1-dominant"]:checked').value;
+    const trait2Dom = document.querySelector('input[name="trait2-dominant"]:checked').value;
+
+    const trait1 = genotype.substring(0, 2);
+    const trait2 = genotype.substring(2, 4);
+
+    let pheno1 = trait1;
+    let pheno2 = trait2;
+
+    if (trait1Dom !== 'none') {
+        pheno1 = showsDominant(trait1, trait1Dom) ? `${trait1Dom}_` : trait1;
+    }
+    if (trait2Dom !== 'none') {
+        pheno2 = showsDominant(trait2, trait2Dom) ? `${trait2Dom}_` : trait2;
     }
 
-    // Probability count
-    const counts = {};
+    return `${pheno1}${pheno2}`;
+}
 
-    results.offspring.forEach(genotype => {
-        counts[genotype] = (counts[genotype] || 0) + 1;
+function showsDominant(genotype, dominant) {
+    return genotype.includes(dominant);
+}
+
+function displayProbabilities(offspring) {
+    const container = document.getElementById('probabilities-container');
+    const showType = document.querySelector('input[name="show-option"]:checked').value;
+    
+    container.innerHTML = '';
+
+    const counts = {};
+    offspring.forEach(genotype => {
+        const key = formatGenotype(genotype);
+        counts[key] = (counts[key] || 0) + 1;
     });
 
-    probabilitiesContainer.innerHTML = '';
-
-    Object.keys(counts).forEach(genotype => {
-        const percentage = ((counts[genotype] / results.offspring.length) * 100).toFixed(0);
-        const trait = colorMap[genotype];
-
+    Object.keys(counts).sort().forEach(genotype => {
+        const percentage = ((counts[genotype] / offspring.length) * 100).toFixed(1);
         const item = document.createElement('div');
         item.className = 'probability-item';
-        item.style.borderTopColor = trait.color;
 
-        item.innerHTML = `
-            <div class="probability-icon">${trait.icon}</div>
-            <div class="trait">${trait.trait}</div>
-            <div class="percentage">${percentage}%</div>
-            <div class="genotype">Genotype: ${genotype}</div>
-        `;
+        if (showType === 'genotype') {
+            item.innerHTML = `
+                <div class="genotype">${genotype}</div>
+                <div class="percentage">${percentage}%</div>
+            `;
+        } else {
+            const phenotype = getPhenotypeFromGenotype(genotype);
+            item.innerHTML = `
+                <div class="genotype">${phenotype}</div>
+                <div class="percentage">${percentage}%</div>
+                <div class="phenotype">Genotype: ${genotype}</div>
+            `;
+        }
 
-        probabilitiesContainer.appendChild(item);
+        container.appendChild(item);
     });
-
-    resultsSection.style.display = 'block';
 }
 
-// NORMALIZE GENOTYPE
-function normalizeGenotype(genotype) {
-    if (genotype.length !== 2) return genotype;
+function getPhenotypeFromGenotype(genotype) {
+    const trait1Dom = document.querySelector('input[name="trait1-dominant"]:checked').value;
+    const trait2Dom = document.querySelector('input[name="trait2-dominant"]:checked').value;
 
-    const alleles = genotype.split('');
+    const trait1 = genotype.substring(0, 2);
+    const trait2 = genotype.substring(2, 4);
 
-    alleles.sort((a, b) => {
-        if (a === a.toUpperCase() && b === b.toLowerCase()) return -1;
-        if (a === a.toLowerCase() && b === b.toUpperCase()) return 1;
-        return a.localeCompare(b);
-    });
+    let pheno1 = trait1;
+    let pheno2 = trait2;
 
-    return alleles.join('');
+    if (trait1Dom !== 'none') {
+        pheno1 = trait1.includes(trait1Dom) ? `${trait1Dom}_` : trait1;
+    }
+    if (trait2Dom !== 'none') {
+        pheno2 = trait2.includes(trait2Dom) ? `${trait2Dom}_` : trait2;
+    }
+
+    return `${pheno1}${pheno2}`;
 }
+
+// Initialize display on page load
+window.addEventListener('load', updateParentDisplay);
 </script>
 </body>
 </html>
